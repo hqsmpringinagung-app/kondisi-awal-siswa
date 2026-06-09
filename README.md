@@ -711,7 +711,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-label="Penyakit Berat Pernah / Sedang Diderita"><input type="text" id="penyakit_1" placeholder="Keluhan utama (jika ada)"></td>
+                        <td data-label="Penyakit Yang Pernah / Sedang Diderita"><input type="text" id="penyakit_1" placeholder="Keluhan utama (jika ada)"></td>
                         <td data-label="Jenis Alergi yang Diderita"><input type="text" id="alergi_1" placeholder="Alergi makanan/cuaca (jika ada)"></td>
                     </tr>
                 </tbody>
