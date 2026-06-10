@@ -4,50 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Evaluasi & Profil Siswa</title>
+    <!-- Memuat html2pdf.js Versi Stabil -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             --primary-hover: #4338ca;
-            --primary-light: #e0e7ff;
-            
-            --success: #10b981;
-            --success-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
-            --success-hover: #047857;
-            --success-light: #ecfdf5;
-            
-            --danger: #f97316;
-            --danger-gradient: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
-            --danger-hover: #c2410c;
-            --danger-light: #fff7ed;
-
-            --kesehatan-gradient: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-            --kesehatan-light: #f0f9ff;
-            
+            --primary-light: #f5f3ff;
+            --success: #059669;
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
             --slate-50: #f8fafc;
             --slate-100: #f1f5f9;
             --slate-200: #e2e8f0;
             --slate-300: #cbd5e1;
             --slate-700: #334155;
             --slate-800: #1e293b;
-            --slate-900: #0f172a;
-            
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 10px 25px -3px rgba(99, 102, 241, 0.15), 0 4px 12px -4px rgba(99, 102, 241, 0.15);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 25px -3px rgba(99, 102, 241, 0.08), 0 4px 12px -4px rgba(99, 102, 241, 0.08);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #ffebf0 0%, #e0c3fc 50%, #cbebff 100%);
-            background-attachment: fixed;
+            background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 50%, #f0fdf4 100%);
             color: var(--slate-800);
             min-height: 100vh;
             padding: 40px 20px;
@@ -57,16 +42,14 @@
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background-color: #ffffff;
             width: 100%;
-            max-width: 950px;
-            padding: 50px;
-            border-radius: 24px;
-            box-shadow: var(--shadow-lg), 0 20px 40px -10px rgba(0, 0, 0, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.6);
+            max-width: 800px;
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             position: relative;
-            overflow: hidden;
         }
 
         .container::before {
@@ -75,72 +58,53 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, #ff8da1, #a78bfa, #38bdf8, #34d399);
+            height: 6px;
+            background: var(--primary-gradient);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 45px;
-            position: relative;
+            margin-bottom: 35px;
         }
 
         .header-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #e0e7ff 0%, #e8f8f5 100%);
+            background: var(--primary-light);
             color: var(--primary);
-            padding: 8px 18px;
+            padding: 6px 16px;
             border-radius: 100px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
-            letter-spacing: 1.2px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            margin-bottom: 12px;
         }
 
         .header h1 {
-            font-size: 30px;
-            font-weight: 850;
-            background: linear-gradient(90deg, #4f46e5 0%, #9333ea 50%, #059669 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.8px;
-            margin-bottom: 10px;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--slate-800);
+            margin-bottom: 8px;
         }
 
         .header p {
-            color: #475569;
-            font-size: 15px;
-            font-weight: 500;
+            color: #64748b;
+            font-size: 14px;
         }
 
         .settings-panel {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border: 1.5px dashed var(--slate-300);
-            border-radius: 16px;
-            padding: 18px 24px;
-            margin-bottom: 40px;
+            background-color: var(--slate-50);
+            border: 1.5px dashed var(--slate-200);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 15px;
             flex-wrap: wrap;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .settings-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13.5px;
-            color: var(--slate-700);
-        }
-
-        .settings-info svg {
-            color: #9333ea;
-            flex-shrink: 0;
         }
 
         .wa-input-container {
@@ -148,121 +112,101 @@
             align-items: center;
             background: white;
             border: 2px solid #ddd6fe;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 6px 12px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-
-        .wa-input-container:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
 
         .wa-input-container span {
-            font-size: 14.5px;
+            font-size: 14px;
             color: #a78bfa;
             font-weight: 700;
-            padding-right: 4px;
         }
 
         .wa-input-container input {
             border: none;
             outline: none;
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--slate-800);
-            width: 140px;
-            background: transparent;
+            width: 120px;
+            margin-left: 4px;
         }
 
         .section-title {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 800;
-            color: var(--slate-900);
-            margin: 40px 0 20px 0;
-            padding-bottom: 8px;
-            border-bottom: 2.5px solid var(--slate-200);
+            color: var(--slate-800);
+            margin: 30px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--slate-200);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .section-title::before {
             content: '';
             display: block;
-            width: 6px;
-            height: 20px;
+            width: 5px;
+            height: 15px;
             background: var(--primary-gradient);
-            border-radius: 30px;
+            border-radius: 10px;
         }
 
         .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
+            gap: 6px;
+            width: 100%;
         }
 
         label {
             font-weight: 700;
             color: var(--slate-700);
-            font-size: 13.5px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 13px;
         }
 
         input[type="text"],
         select,
         textarea {
             width: 100%;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border: 2px solid var(--slate-200);
-            border-radius: 12px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 13.5px;
             font-weight: 500;
             color: var(--slate-800);
             background-color: var(--slate-50);
-            transition: var(--transition);
-        }
-
-        input[type="text"]::placeholder,
-        textarea::placeholder {
-            color: #94a3b8;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
         input[type="text"]:focus,
         select:focus,
         textarea:focus {
-            outline: none;
             border-color: var(--primary);
             background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         }
 
         .child-order {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
-            font-size: 14px;
+            font-size: 13.5px;
             color: var(--slate-700);
             font-weight: 600;
         }
 
         .child-order input {
-            width: 80px;
+            width: 60px;
             text-align: center;
         }
 
@@ -271,67 +215,70 @@
             gap: 12px;
         }
 
-        .table-container {
+        /* Segmen Row Box Memanjang Indah */
+        .row-item {
             border: 2px solid var(--slate-200);
-            border-radius: 16px;
+            border-radius: 10px;
+            margin-bottom: 15px;
             overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        table {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            background: white;
         }
 
-        th, td {
-            padding: 16px;
-            text-align: left;
-            border-bottom: 1.5px solid var(--slate-100);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        th {
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 12.5px;
-            letter-spacing: 0.6px;
-        }
-
-        .th-default {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            color: #0369a1;
-        }
-
-        .th-positif {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            color: #047857;
-        }
-
-        .th-negatif {
-            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
-            color: #c2410c;
-        }
-
-        table input[type="text"] {
-            background-color: var(--slate-50);
-            border: 1.5px solid var(--slate-200);
+        .row-label {
             padding: 10px 14px;
-            border-radius: 8px;
-            transition: var(--transition);
+            font-size: 12px;
+            font-weight: 850;
+            text-transform: uppercase;
         }
 
-        table input[type="text"]:focus {
-            border-color: var(--primary);
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        .row-label.blue { background: #e0f2fe; color: #0369a1; }
+        .row-label.green { background: #d1fae5; color: #047857; }
+        .row-label.orange { background: #ffedd5; color: #c2410c; }
+
+        .row-content {
+            background: #ffffff;
+            padding: 8px;
         }
 
+        .row-content input[type="text"] {
+            border: 1px solid var(--slate-200);
+            background-color: var(--slate-50);
+        }
+
+        /* Tombol Aksi */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: white;
+            transition: transform 0.2s, filter 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-pdf { background: var(--primary-gradient); }
+        .btn-pdf:hover { filter: brightness(1.1); }
+        .btn-wa { background: var(--success-gradient); }
+        .btn-wa:hover { filter: brightness(1.1); }
+        .btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* Toast Popup Notifikasi */
         #toast-container {
             position: fixed;
             bottom: 30px;
@@ -343,269 +290,128 @@
         }
 
         .toast {
-            background: var(--slate-900);
+            background: var(--slate-800);
             color: white;
-            padding: 16px 24px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-lg), 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-            font-size: 14px;
-            font-weight: 700;
+            padding: 14px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            font-size: 13.5px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 12px;
-            min-width: 320px;
-            transform: translateY(100px);
-            opacity: 0;
-            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            gap: 10px;
+            min-width: 280px;
+            animation: slideIn 0.3s ease forwards;
         }
 
-        .toast.success {
-            border-left: 6px solid #10b981;
-            background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%);
-        }
-
-        .toast.error {
-            border-left: 6px solid #f97316;
-            background: linear-gradient(135deg, #0f172a 0%, #7c2d12 100%);
-        }
+        .toast.success { border-left: 5px solid #10b981; }
+        .toast.error { border-left: 5px solid #ef4444; }
 
         @keyframes slideIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 45px;
+        /* ==========================================================
+           CSS KHUSUS CONVERT PDF (SANGAT PADAT - PAS SATU LEMBAR)
+           ========================================================== */
+        .pdf-page-container {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            padding: 0 !important;
+            font-family: Arial, sans-serif !important;
+            width: 100% !important;
         }
 
-        .btn {
-            flex: 1;
-            padding: 18px 24px;
-            border: none;
-            border-radius: 16px;
-            font-size: 15.5px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            color: white;
-            box-shadow: var(--shadow-sm);
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 12px;
+            border-bottom: 2.5px double #000000;
+            padding-bottom: 5px;
         }
 
-        .btn-pdf {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+        .pdf-header h2 {
+            font-size: 16px;
+            text-transform: uppercase;
+            color: #000000;
+            margin-bottom: 2px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
-        .btn-pdf:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
-            filter: brightness(1.05);
+        .pdf-header p {
+            font-size: 10px;
+            color: #333333;
+            margin-bottom: 2px;
         }
 
-        .btn-wa {
-            background: var(--success-gradient);
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        .pdf-header p.sub {
+            font-size: 8.5px;
+            color: #555555;
+            font-style: italic;
         }
 
-        .btn-wa:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
-            filter: brightness(1.05);
+        .pdf-section-title {
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 10px 0 4px 0;
+            border-bottom: 1.5px solid #000000;
+            color: #000000;
+            padding-bottom: 1px;
         }
 
-        .btn svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 6px;
         }
 
-        @media print {
-            @page {
-                size: A4 portrait;
-                margin: 8mm 12mm 8mm 12mm;
-            }
-            body {
-                background: white !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                color: #000 !important;
-                font-size: 11px !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .container {
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                max-width: 100% !important;
-                background: transparent !important;
-            }
-            .container::before {
-                display: none !important;
-            }
-            .action-buttons, .settings-panel, .header-badge, #toast-container {
-                display: none !important;
-            }
-            .header {
-                margin-bottom: 12px !important;
-                text-align: left !important;
-            }
-            .header h1 {
-                font-size: 20px !important;
-                margin-bottom: 2px !important;
-                background: none !important;
-                -webkit-text-fill-color: initial !important;
-                color: #000 !important;
-            }
-            .header p {
-                font-size: 11px !important;
-                color: #444 !important;
-            }
-            .section-title {
-                font-size: 11.5px !important;
-                margin: 12px 0 6px 0 !important;
-                padding-bottom: 2px !important;
-                border-bottom: 1.5px solid #334155 !important;
-                color: #000 !important;
-            }
-            .section-title::before {
-                display: none !important;
-            }
-            .form-grid {
-                gap: 8px 12px !important;
-            }
-            .form-group {
-                gap: 2px !important;
-            }
-            label {
-                font-size: 10px !important;
-                color: #1e293b !important;
-                font-weight: 800 !important;
-                margin-bottom: 1px !important;
-            }
-            input[type="text"], select, textarea {
-                background: transparent !important;
-                border: none !important;
-                border-bottom: 1px dotted #64748b !important;
-                border-radius: 0 !important;
-                padding: 2px 0 !important;
-                font-size: 11px !important;
-                box-shadow: none !important;
-                color: #000 !important;
-                height: auto !important;
-            }
-            textarea {
-                resize: none !important;
-                height: auto !important;
-            }
-            .child-order {
-                gap: 6px !important;
-            }
-            .child-order input {
-                width: 40px !important;
-            }
-            .table-container {
-                border: 1px solid #cbd5e1 !important;
-                border-radius: 8px !important;
-                margin-bottom: 10px !important;
-                box-shadow: none !important;
-            }
-            table {
-                font-size: 11px !important;
-            }
-            th, td {
-                padding: 6px 10px !important;
-                border-bottom: 1px solid #e2e8f0 !important;
-            }
-            th {
-                background: #f1f5f9 !important;
-                color: #0f172a !important;
-                font-size: 10px !important;
-                font-weight: 800 !important;
-            }
-            table input[type="text"] {
-                border: none !important;
-                padding: 0 !important;
-                background: transparent !important;
-            }
+        .pdf-table td {
+            padding: 4px 8px;
+            font-size: 11px;
+            border: 1px solid #444444;
+            color: #000000;
+            vertical-align: top;
         }
 
-        /* RESPONSIVE DESIGN (HP) */
+        .pdf-table td.pdf-lbl {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            width: 32%;
+        }
+
+        .pdf-signature-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        .pdf-signature-table td {
+            width: 50%;
+            text-align: center;
+            font-size: 11px;
+            vertical-align: top;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        .pdf-sig-space {
+            height: 40px;
+        }
+
+        .pdf-sig-line {
+            width: 70%;
+            margin: 0 auto 3px auto;
+            border-bottom: 1px solid #000000;
+        }
+
+        /* RESPONSIVE LAYOUT SMARTPHONE */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 30px 16px;
-                border-radius: 16px;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .form-group.full-width {
-                grid-column: span 1;
-            }
-            .ttl-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .child-order {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            .child-order input {
-                width: 100%;
-            }
-            .action-buttons {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .table-container {
-                border: none;
-                box-shadow: none;
-                background: transparent;
-            }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-            thead {
-                display: none;
-            }
-            tr {
-                background-color: white;
-                border: 2px solid var(--slate-200);
-                border-radius: 16px;
-                padding: 16px;
-                margin-bottom: 16px;
-                box-shadow: var(--shadow-sm);
-            }
-            td {
-                border: none !important;
-                padding: 8px 0 !important;
-                position: relative;
-            }
-            td::before {
-                content: attr(data-label);
-                display: block;
-                font-weight: 800;
-                font-size: 11px;
-                color: var(--slate-700);
-                margin-bottom: 6px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
+            body { padding: 10px; }
+            .container { padding: 25px 15px; border-radius: 16px; }
+            .ttl-group { flex-direction: column; gap: 8px; }
+            .action-buttons { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
@@ -619,27 +425,11 @@
         <p>Bimbingan Konseling dan Penilaian Perkembangan Kepribadian Mandiri</p>
     </div>
 
-    <!-- Panel Pengaturan Nomor Guru BK Secara Dinamis -->
-    <div class="settings-panel">
-        <div class="settings-info">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-            <div>
-                <strong style="color: #6d28d9;">Tujuan Pengiriman:</strong>
-                <div style="font-size: 11.5px; color: #475569; font-weight: 500;">Sesuaikan nomor WhatsApp Guru BK atau wali kelas aktif di sini</div>
-            </div>
-        </div>
-        <div class="wa-input-container">
-            <span>+</span>
-            <input type="text" id="no_bk" value="628123456789" placeholder="62812xxxxxx">
-        </div>
-    </div>
-
-    <form id="formSiswa">
+    <!-- Panel Pengaturan Nomor Guru BK -->
+    
+    <form id="formSiswa" onsubmit="event.preventDefault();">
         
-        <!-- BAGIAN 1: PROFIL SISWA -->
+        <!-- BAGIAN 1: PROFIL SISWA (BARIS MEMANJANG PENUH) -->
         <div class="section-title">Profil Siswa</div>
         <div class="form-grid">
             <div class="form-group">
@@ -649,7 +439,7 @@
 
             <div class="form-group">
                 <label for="gender">Jenis Kelamin</label>
-                <select id="gender" required>
+                <select id="gender">
                     <option value="">-- Pilih Jenis Kelamin --</option>
                     <option value="Laki-laki">Laki-laki</option>
                     <option value="Perempuan">Perempuan</option>
@@ -657,10 +447,10 @@
             </div>
 
             <div class="form-group">
-                <label>Tempat & Tanggal Lahir (Ketik Manual)</label>
+                <label>Tempat & Tanggal Lahir</label>
                 <div class="ttl-group">
-                    <input type="text" id="tempat_lahir" placeholder="Kota Kelahiran" style="flex: 4;">
-                    <input type="text" id="tanggal_lahir" placeholder="Contoh: 12 Mei 2010" style="flex: 5;">
+                    <input type="text" id="tempat_lahir" placeholder="Kota Kelahiran" style="flex: 1;">
+                    <input type="text" id="tanggal_lahir" placeholder="Contoh: 29 Juni 2010" style="flex: 1;">
                 </div>
             </div>
 
@@ -693,80 +483,83 @@
                 <input type="text" id="asal_sekolah" placeholder="Asal sekolah/instansi sebelumnya">
             </div>
 
-            <div class="form-group full-width">
+            <div class="form-group">
                 <label for="alamat">Alamat Rumah</label>
                 <textarea id="alamat" rows="2" placeholder="Tuliskan alamat domisili lengkap saat ini"></textarea>
             </div>
+
         </div>
 
-        <!-- BAGIAN 2: RIWAYAT KESEHATAN (TEPAT 1 BARIS) -->
+        <!-- BAGIAN 2: RIWAYAT KESEHATAN (MEMANJANG MAKSIMAL) -->
         <div class="section-title">Riwayat Kesehatan</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="th-default" style="width: 50%;">Penyakit Yang Pernah / Sedang Diderita</th>
-                        <th class="th-default" style="width: 50%;">Jenis Alergi yang Diderita</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td data-label="Penyakit Yang Pernah / Sedang Diderita"><input type="text" id="penyakit_1" placeholder="Keluhan utama (jika ada)"></td>
-                        <td data-label="Jenis Alergi yang Diderita"><input type="text" id="alergi_1" placeholder="Alergi makanan/cuaca (jika ada)"></td>
-                    </tr>
-                </tbody>
-            </table>
+        
+        <div class="row-item">
+            <div class="row-label blue">Penyakit Yang Pernah / Sedang Diderita</div>
+            <div class="row-content">
+                <input type="text" id="penyakit_1" placeholder="Tulis keluhan penyakit utama siswa (jika ada)">
+            </div>
+        </div>
+
+        <div class="row-item">
+            <div class="row-label blue">Jenis Alergi yang Diderita</div>
+            <div class="row-content">
+                <input type="text" id="alergi_1" placeholder="Tulis riwayat alergi makanan, obat, atau cuaca (jika ada)">
+            </div>
         </div>
 
         <!-- BAGIAN 3: POTENSI / BAKAT -->
         <div class="section-title">Potensi / Bakat Siswa</div>
         <div class="form-group">
             <label for="potensi">Potensi Unggul / Minat Bakat Utama</label>
-            <textarea id="potensi" rows="2" placeholder="Contoh: Sangat berbakat di bidang matematika, aktif di tim olahraga, atau mahir melukis."></textarea>
+            <textarea id="potensi" rows="2" placeholder="Tuliskan kelebihan, minat, atau bakat khusus siswa..."></textarea>
         </div>
 
         <!-- BAGIAN 3.5: KESUKAAN ANANDA -->
         <div class="section-title">Kesukaan Ananda</div>
         <div class="form-group">
             <label for="kesukaan">Hal-hal yang Disukai / Favorit Ananda (Hobi, Makanan, Aktivitas, Warna, dll.)</label>
-            <textarea id="kesukaan" rows="2" placeholder="Contoh: suka diberi hadiah, Suka diperhatikan,."></textarea>
+            <textarea id="kesukaan" rows="2" placeholder="Tulis hal-hal yang membuat siswa senang atau bersemangat..."></textarea>
         </div>
 
         <!-- BAGIAN 4: EVALUASI PERILAKU -->
         <div class="section-title">Evaluasi Perilaku & Penanganan Orang Tua</div>
         
-        <!-- Tabel Perilaku Positif (Tepat 1 Baris) -->
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="th-positif">Sifat / Perilaku  (Positif)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td data-label="Sifat / Perilaku  (Positif)"><input type="text" id="pos_1" placeholder="Sifat baik utama (contoh: mandiri, sopan, suka menolong, jujur)"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row-item">
+            <div class="row-label green">Sifat / Perilaku Baik (Positif)</div>
+            <div class="row-content">
+                <input type="text" id="pos_1" placeholder="Tulis sifat baik utama (contoh: mandiri, sopan, suka menolong, jujur)">
+            </div>
         </div>
 
-        <!-- Tabel Perilaku Negatif & Cara Penanganan (Tepat 1 Baris) -->
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="th-negatif" style="width: 50%;">Sifat / Perilaku Negatif (menurut orang tua)</th>
-                        <th class="th-negatif" style="width: 50%;">Cara Orang Tua Menangani di Rumah (Solusi)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td data-label="Sifat / Perilaku Negatif (menurut orang tua)"><input type="text" id="neg_1" placeholder="(contoh: pemarah, suka membantah, suka menunda tugas)"></td>
-                        <td data-label="langgkah Orang Tua Menangani di Rumah (Solusi)"><input type="text" id="sol_1" placeholder="(contoh: memberikan pengarahan sabar, menghargai sebuah proses, dll.)"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row-item">
+            <div class="row-label orange">Sifat / Perilaku Negatif (Menurut Orang Tua)</div>
+            <div class="row-content">
+                <input type="text" id="neg_1" placeholder="(contoh: suka marah, membantah, malas belajar)">
+            </div>
+        </div>
+
+        <div class="row-item">
+            <div class="row-label orange">Cara Orang Tua Menangani di Rumah (Solusi)</div>
+            <div class="row-content">
+                <input type="text" id="sol_1" placeholder="Tulis solusi tindakan orang tua menghadapi sifat negatif tersebut">
+            </div>
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="nama_ortu">Nama Orang Tua / Wali</label>
+                <input type="text" id="nama_ortu" placeholder="Masukkan nama lengkap Orang Tua atau Wali siswa" required>
+            </div>
+        </div>
+        <div>
+                <div class="settings-panel">
+            <div style="font-size: 12.5px; color: var(--slate-700);">
+                <strong>Tujuan Pengiriman WA (pakai code 62):</strong> Masukkan nomor WA Guru BK aktif di samping kanan.
+            </div>
+        <div class="wa-input-container">
+            <span>+</span>
+            <input type="text" id="no_bk" value="" placeholder="62812xxxxxx">
+        </div>
+    </div>
         </div>
 
         <!-- ACTION BUTTONS -->
@@ -775,14 +568,14 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Cetak / Simpan PDF
+                Simpan PDF
             </button>
             
             <button type="button" class="btn btn-wa" onclick="kirimKeWhatsAppBK()">
                 <svg viewBox="0 0 24 24">
                     <path d="M12.004 2c-5.51 0-9.99 4.49-9.99 10 0 1.77.47 3.43 1.29 4.9L2 22l5.25-1.37c1.42.77 3.03 1.21 4.75 1.21 5.51 0 9.99-4.49 9.99-10s-4.48-10-9.99-10zm5.83 14.25c-.24.67-1.19 1.27-1.95 1.39-.71.1-1.62.13-2.61-.19-3.95-1.28-6.49-5.3-6.69-5.57-.2-.27-1.61-2.14-1.61-4.08 0-1.94 1.01-2.9 1.37-3.27.36-.37.79-.46 1.05-.46.26 0 .52.01.74.02.23.01.48-.09.73.52.26.63.88 2.16.96 2.32.08.16.13.35.03.56-.1.21-.15.34-.31.53-.16.19-.34.42-.48.57-.16.16-.33.34-.14.67.19.33.85 1.4 1.83 2.27 1.26 1.13 2.32 1.48 2.65 1.64.33.16.52.13.71-.09.19-.22.82-.96 1.04-1.29.22-.33.45-.28.75-.17.31.11 1.96.93 2.3 1.1.33.16.56.24.64.38.08.14.08.82-.16 1.49z"/>
                 </svg>
-                Kirim ke WA Guru BK
+                Kirim ke WA BK
             </button>
         </div>
     </form>
@@ -792,92 +585,172 @@
 <div id="toast-container"></div>
 
 <script>
-    // FUNGSI NOTIFIKASI TOAST CUSTOM
+    // Fungsi Toast Notifikasi
     function showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
-        
-        let icon = '';
-        if(type === 'success') {
-            icon = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-        } else {
-            icon = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
-        }
-
-        toast.innerHTML = `${icon} <span>${message}</span>`;
+        toast.innerText = message;
         container.appendChild(toast);
-
         setTimeout(() => {
             toast.style.animation = 'none';
             toast.offsetHeight; // trigger reflow
-            toast.style.transition = 'opacity 0.3s, transform 0.3s';
+            toast.style.transition = 'opacity 0.3s';
             toast.style.opacity = '0';
-            toast.style.transform = 'translateY(-20px)';
             setTimeout(() => toast.remove(), 300);
-        }, 3500);
+        }, 3000);
     }
 
-    // FUNGSI MEMICU CETAK PDF BRSER
+    // Fungsi Pengonversi PDF (Instant, Tanpa Print Dialog, & Garansi Anti Blank!)
     function simpanCetakPDF() {
         const nama = document.getElementById('nama').value;
+        const namaOrtu = document.getElementById('nama_ortu').value;
         if(!nama) {
-            showToast("Harap isi Nama Lengkap terlebih dahulu sebelum menyimpan PDF.", "error");
+            showToast("Harap isi Nama Lengkap terlebih dahulu.", "error");
             return;
         }
-        showToast("Menyiapkan dokumen PDF...", "success");
-        setTimeout(() => {
-            window.print();
-        }, 500);
+        if(!namaOrtu) {
+            showToast("Harap isi Nama Orang Tua / Wali terlebih dahulu.", "error");
+            return;
+        }
+
+        showToast("Memproses PDF Anda...", "success");
+
+        // Tarik data form secara manual
+        const gender = document.getElementById('gender').value || '-';
+        const tempat = document.getElementById('tempat_lahir').value || '-';
+        const tgl = document.getElementById('tanggal_lahir').value || '-';
+        const anak_ke = document.getElementById('anak_ke').value || '-';
+        const dari = document.getElementById('dari_bersaudara').value || '-';
+        const agama = document.getElementById('agama').value || '-';
+        const sekolah = document.getElementById('asal_sekolah').value || '-';
+        const alamat = document.getElementById('alamat').value || '-';
+        const penyakit = document.getElementById('penyakit_1').value || '-';
+        const alergi = document.getElementById('alergi_1').value || '-';
+        const potensi = document.getElementById('potensi').value || '-';
+        const kesukaan = document.getElementById('kesukaan').value || '-';
+        const pos = document.getElementById('pos_1').value || '-';
+        const neg = document.getElementById('neg_1').value || '-';
+        const sol = document.getElementById('sol_1').value || '-';
+
+        // Rekayasa Template PDF Indah (Teks murni & Tabel, Dijamin Lolos dari Bug Blank & Muat Satu Lembar)
+        const pdfClone = document.createElement('div');
+        pdfClone.className = 'pdf-page-container';
+        pdfClone.innerHTML = `
+            <div style="padding: 2px;">
+                <div class="pdf-header">
+                    <h2>LAPORAN KONDISI AWAL SISWA</h2>
+                    <h2>SMP HAMALATUL QUR'AN</h2>
+                    <p>Bimbingan Konseling dan Penilaian Perkembangan Kepribadian Mandiri</p>
+                    <p class="sub">Jl.Raya Pare Kandangan No 5 dsn Ringinagung Desa Keling Kec Kepung Kab Kediri </p>
+                </div>
+
+                <div class="pdf-section-title">I. PROFIL SISWA</div>
+                <table class="pdf-table">
+                    <tr><td class="pdf-lbl">Nama Lengkap Siswa</td><td><strong>${nama}</strong></td></tr>
+                    <tr><td class="pdf-lbl">Nama Orang Tua / Wali</td><td><strong>${namaOrtu}</strong></td></tr>
+                    <tr><td class="pdf-lbl">Jenis Kelamin</td><td>${gender}</td></tr>
+                    <tr><td class="pdf-lbl">Tempat, Tanggal Lahir</td><td>${tempat}, ${tgl}</td></tr>
+                    <tr><td class="pdf-lbl">Urutan Anak</td><td>Anak ke ${anak_ke} dari ${dari} bersaudara</td></tr>
+                    <tr><td class="pdf-lbl">Agama</td><td>${agama}</td></tr>
+                    <tr><td class="pdf-lbl">Asal Sekolah</td><td>${sekolah}</td></tr>
+                    <tr><td class="pdf-lbl">Alamat Rumah</td><td>${alamat}</td></tr>
+                </table>
+
+                <div class="pdf-section-title">II. RIWAYAT KESEHATAN</div>
+                <table class="pdf-table">
+                    <tr><td class="pdf-lbl">Penyakit yang Pernah / Sedang Diderita</td><td>${penyakit}</td></tr>
+                    <tr><td class="pdf-lbl">Jenis Alergi yang Diderita</td><td>${alergi}</td></tr>
+                </table>
+
+                <div class="pdf-section-title">III. POTENSI & KESUKAAN SISWA</div>
+                <table class="pdf-table">
+                    <tr><td class="pdf-lbl">Potensi Unggul / Minat Bakat</td><td>${potensi}</td></tr>
+                    <tr><td class="pdf-lbl">Kesukaan Ananda (Hobi/Fav)</td><td>${kesukaan}</td></tr>
+                </table>
+
+                <div class="pdf-section-title">IV. EVALUASI PERILAKU & SOLUSI ORANG TUA</div>
+                <table class="pdf-table">
+                    <tr><td class="pdf-lbl" style="background-color: #f2fdf2;">Sifat / Perilaku Baik (Positif)</td><td>${pos}</td></tr>
+                    <tr><td class="pdf-lbl" style="background-color: #fffaf0;">Sifat / Perilaku Negatif</td><td>${neg}</td></tr>
+                    <tr><td class="pdf-lbl" style="background-color: #fffaf0;">Cara Menangani di Rumah (Solusi)</td><td>${sol}</td></tr>
+                </table>
+
+                <!-- Kolom Tanda Tangan Manual -->
+                <table class="pdf-signature-table">
+                    <tr>
+                        <td>
+                        <td>
+                            <strong>......, ............................ 20...</strong><br>
+                            <span>Orang Tua / Wali Murid</span>
+                            <div class="pdf-sig-space"></div>
+                            <div class="pdf-sig-line"></div>
+                            <span style="color: #000; font-weight: bold; font-size: 11px;">( ${namaOrtu} )</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        `;
+
+        const opsi = {
+            margin:       [8, 10, 8, 10], // Margin diperkecil agar pas 1 lembar A4 secara vertikal
+            filename:     `Evaluasi_Siswa_${nama.replace(/\s+/g, '_')}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: true, 
+                backgroundColor: '#ffffff',
+                logging: false,
+                scrollY: 0,
+                scrollX: 0
+            },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Simpan dokumen langsung tanpa masuk window.print() browser
+        html2pdf().set(opsi).from(pdfClone).save().then(() => {
+            showToast("PDF Berhasil diunduh langsung!", "success");
+        }).catch((err) => {
+            showToast("Terjadi kesalahan saat memproses PDF.", "error");
+        });
     }
 
-    // FUNGSI FORMAT DATA & KIRIM WHATSAPP BK
+    // Fungsi Kirim ke WhatsApp
     function kirimKeWhatsAppBK() {
         const nama = document.getElementById('nama').value;
-        const gender = document.getElementById('gender').value;
-        const anak_ke = document.getElementById('anak_ke').value;
-        const dari = document.getElementById('dari_bersaudara').value;
-        const tempat_lahir = document.getElementById('tempat_lahir').value;
-        const tanggal_lahir = document.getElementById('tanggal_lahir').value;
-        const agama = document.getElementById('agama').value;
-        const asal_sekolah = document.getElementById('asal_sekolah').value;
-        const alamat = document.getElementById('alamat').value;
-        const potensi = document.getElementById('potensi').value;
-        const kesukaan = document.getElementById('kesukaan').value;
-        
-        // Mengambil nomor WA dinamis dari panel pengaturan
+        const namaOrtu = document.getElementById('nama_ortu').value || '-';
         let no_bk_input = document.getElementById('no_bk').value.replace(/[^0-9]/g, '');
 
         if(!nama) {
-            showToast("Mohon masukkan Nama Lengkap Siswa terlebih dahulu.", "error");
+            showToast("Nama siswa tidak boleh kosong.", "error");
             return;
         }
 
         if(!no_bk_input) {
-            showToast("Nomor WhatsApp BK tujuan tidak boleh kosong.", "error");
+            showToast("Nomor WhatsApp BK tidak boleh kosong.", "error");
             return;
         }
 
-        // Penyusunan format pesan WhatsApp tanpa nomor urut yang rapi
-        let pesan = `*PROFIL & EVALUASI PERILAKU SISWA*\n\n`;
+        let pesan = `*PROFIL & EVALUASI KONDISI SISWA*\n\n`;
         pesan += `*PROFIL SISWA*\n`;
-        pesan += `• Nama: ${nama}\n`;
-        pesan += `• Jenis Kelamin: ${gender || '-'}\n`;
-        pesan += `• Urutan Anak: Anak ke-${anak_ke || '-'} dari ${dari || '-'} bersaudara\n`;
-        pesan += `• TTL: ${tempat_lahir || '-'}, ${tanggal_lahir || '-'}\n`;
-        pesan += `• Agama: ${agama || '-'}\n`;
-        pesan += `• Asal Sekolah: ${asal_sekolah || '-'}\n`;
-        pesan += `• Alamat: ${alamat || '-'}\n\n`;
+        pesan += `• Nama Siswa: ${nama}\n`;
+        pesan += `• Nama Orang Tua: ${namaOrtu}\n`;
+        pesan += `• Jenis Kelamin: ${document.getElementById('gender').value || '-'}\n`;
+        pesan += `• Urutan Anak: Anak ke-${document.getElementById('anak_ke').value || '-'} dari ${document.getElementById('dari_bersaudara').value || '-'} bersaudara\n`;
+        pesan += `• TTL: ${document.getElementById('tempat_lahir').value || '-'}, ${document.getElementById('tanggal_lahir').value || '-'}\n`;
+        pesan += `• Agama: ${document.getElementById('agama').value || '-'}\n`;
+        pesan += `• Asal Sekolah: ${document.getElementById('asal_sekolah').value || '-'}\n`;
+        pesan += `• Alamat: ${document.getElementById('alamat').value || '-'}\n\n`;
         
         pesan += `*RIWAYAT KESEHATAN*\n`;
         pesan += `• Penyakit: ${document.getElementById('penyakit_1').value || '-'}\n`;
         pesan += `• Alergi: ${document.getElementById('alergi_1').value || '-'}\n\n`;
         
         pesan += `*POTENSI / BAKAT*\n`;
-        pesan += `• Bidang: ${potensi || '-'}\n\n`;
+        pesan += `• Bidang: ${document.getElementById('potensi').value || '-'}\n\n`;
 
         pesan += `*KESUKAAN ANANDA*\n`;
-        pesan += `• Favorit: ${kesukaan || '-'}\n\n`;
+        pesan += `• Favorit: ${document.getElementById('kesukaan').value || '-'}\n\n`;
 
         pesan += `*EVALUASI PERILAKU POSITIF*\n`;
         pesan += `• Sifat Positif: ${document.getElementById('pos_1').value || '-'}\n\n`;
@@ -886,13 +759,13 @@
         pesan += `• Sifat Negatif: ${document.getElementById('neg_1').value || '-'}\n`;
         pesan += `  Solusi Rumah: ${document.getElementById('sol_1').value || '-'}\n`;
 
-        showToast("Membuka aplikasi WhatsApp...", "success");
+        showToast("Membuka WhatsApp...", "success");
 
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${no_bk_input}&text=${encodeURIComponent(pesan)}`;
         
         setTimeout(() => {
             window.open(urlWhatsApp, '_blank');
-        }, 800);
+        }, 600);
     }
 </script>
 </body>
